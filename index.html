@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STACKKED - The Contractor Success Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --stone-orange: #B75533;
+            --stone-black: #221F20;
+            --stone-white: #FFFFFF;
+            --stone-blue: #526D9D;
+            --stone-gold: #C8944E;
+            --stone-green: #3E6855;
+            --kraft-bg: #D4C4A8;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--stone-black);
+            color: var(--stone-black);
+            overflow: hidden;
+        }
+
+        .presentation {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            padding: 4rem 6rem;
+            background: var(--kraft-bg);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(139, 119, 101, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 119, 101, 0.02) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 119, 101, 0.03) 2px, rgba(139, 119, 101, 0.03) 4px);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            animation: slideIn 0.6s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            height: 60px;
+        }
+
+        .slide-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--stone-orange);
+            letter-spacing: 2px;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            color: var(--stone-black);
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            color: var(--stone-black);
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--stone-orange);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--stone-orange);
+            margin-bottom: 2rem;
+        }
+
+        .highlight {
+            color: var(--stone-orange);
+            font-weight: 800;
+        }
+
+        .stat {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 7rem;
+            color: var(--stone-orange);
+            line-height: 1;
+            margin: 2rem 0;
+            animation: statPop 0.8s ease;
+        }
+
+        @keyframes statPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .content-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 1rem auto;
+            font-weight: 500;
+        }
+
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 2rem auto;
+        }
+
+        .quadrant-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(34, 31, 32, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .quadrant-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            animation: itemReveal 0.5s ease;
+        }
+
+        @keyframes itemReveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quadrant-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(34, 31, 32, 0.15);
+        }
+
+        .quadrant-item h3 {
+            color: var(--stone-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .quadrant-item p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1100px;
+            width: 100%;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: var(--stone-orange);
+        }
+
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .timeline-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            animation: timelineReveal 0.6s ease;
+        }
+
+        @keyframes timelineReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-dot {
+            width: 30px;
+            height: 30px;
+            background: var(--stone-orange);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            position: relative;
+            z-index: 2;
+            border: 5px solid var(--kraft-bg);
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(34, 31, 32, 0.1);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-content p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--stone-orange);
+            color: white;
+            padding: 1.2rem 3rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(183, 85, 51, 0.3);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: #9a462a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(183, 85, 51, 0.4);
+        }
+
+        .split-content {
+            display: flex;
+            gap: 3rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 2rem auto;
+            align-items: center;
+        }
+
+        .split-content > div {
+            flex: 1;
+        }
+
+        .split-left {
+            text-align: left;
+        }
+
+        .split-right {
+            text-align: left;
+        }
+
+        .visual-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(34, 31, 32, 0.15);
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .flow-step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 6px solid var(--stone-orange);
+            box-shadow: 0 4px 12px rgba(34, 31, 32, 0.1);
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .flow-step.revealed {
+            opacity: 1;
+            transform: translateX(0);
+            animation: flowReveal 0.5s ease;
+        }
+
+        @keyframes flowReveal {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .flow-step h4 {
+            color: var(--stone-orange);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .mountain-icon {
+            width: 200px;
+            height: auto;
+            margin: 2rem auto;
+            opacity: 0;
+            animation: mountainFade 1.5s ease forwards;
+        }
+
+        @keyframes mountainFade {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 6px;
+            background: var(--stone-orange);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: var(--stone-orange);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(183, 85, 51, 0.3);
+        }
+
+        .nav-button:hover {
+            background: #9a462a;
+            transform: scale(1.1);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .reveal-on-click {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: var(--stone-orange);
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .spiral-diagram {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .spiral-step {
+            background: white;
+            padding: 1.2rem;
+            margin: 0.8rem;
+            border-radius: 10px;
+            border-left: 6px solid var(--stone-orange);
+            box-shadow: 0 4px 12px rgba(34, 31, 32, 0.1);
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+        }
+
+        .spiral-step.revealed {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            animation: spiralReveal 0.6s ease;
+        }
+
+        @keyframes spiralReveal {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .emphasis {
+            font-style: italic;
+            color: var(--stone-orange);
+            font-weight: 700;
+        }
+
+        .investment-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(34, 31, 32, 0.2);
+            max-width: 700px;
+            margin: 2rem auto;
+            border: 4px solid var(--stone-orange);
+        }
+
+        .investment-box h2 {
+            color: var(--stone-orange);
+            margin-bottom: 2rem;
+        }
+
+        .investment-details {
+            text-align: left;
+            font-size: 1.3rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+        }
+
+        .roi-highlight {
+            background: var(--stone-orange);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 3rem 4rem;
+            }
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 2.5rem; }
+            .stat { font-size: 5rem; }
+            .quadrant-grid {
+                grid-template-columns: 1fr;
+            }
+            .split-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation" id="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active" data-slide="1">
+            <div class="slide-content">
+                <svg class="mountain-icon" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 250 L250 80 L400 180 L550 60 L700 250"
+                          stroke="#221F20"
+                          stroke-width="20"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                    <path d="M150 250 L280 100 L410 200 L540 90 L670 250"
+                          stroke="#221F20"
+                          stroke-width="20"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                <h1>STACKKED</h1>
+                <div class="subtitle">Building Contractor Success & Market Dominance</div>
+                <p class="content-text">A Strategic Platform for Stone Coat Countertops</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Hidden Problem -->
+        <div class="slide" data-slide="2">
+            <div class="slide-header">
+                <div class="slide-number">THE HIDDEN PROBLEM</div>
+            </div>
+            <div class="slide-content">
+                <h2>What's killing your contractors?</h2>
+                <div class="stat">70%</div>
+                <p class="content-text">of small contractors <span class="highlight">don't make it past 3 years</span></p>
+                <p class="content-text" style="margin-top: 3rem; font-size: 1.6rem; font-weight: 700;">
+                    When they fail, you lose <span class="highlight">$60K-$100K</span> in lifetime value
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Revenue Death Spiral -->
+        <div class="slide" data-slide="3">
+            <div class="slide-header">
+                <div class="slide-number">THE DEATH SPIRAL</div>
+            </div>
+            <div class="slide-content reveal-on-click">
+                <h2>The Contractor Death Spiral</h2>
+                <div class="spiral-diagram">
+                    <div class="spiral-step" data-step="1">
+                        <strong>1.</strong> Contractor runs out of leads
+                    </div>
+                    <div class="spiral-step" data-step="2">
+                        <strong>2.</strong> Revenue drops, can't make payroll
+                    </div>
+                    <div class="spiral-step" data-step="3">
+                        <strong>3.</strong> They stop ordering materials
+                    </div>
+                    <div class="spiral-step" data-step="4">
+                        <strong>4.</strong> Take discounted jobs just to survive
+                    </div>
+                    <div class="spiral-step" data-step="5">
+                        <strong>5.</strong> Quality suffers, reviews tank
+                    </div>
+                    <div class="spiral-step" data-step="6">
+                        <strong>6.</strong> Even fewer leads → Business fails
+                    </div>
+                </div>
+                <div class="click-hint">Click to reveal each step →</div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Following the Money -->
+        <div class="slide" data-slide="4">
+            <div class="slide-header">
+                <div class="slide-number">FOLLOWING THE MONEY</div>
+            </div>
+            <div class="slide-content">
+                <h2>The Revenue Reality</h2>
+                <div class="split-content">
+                    <div class="split-left">
+                        <div class="visual-box">
+                            <h3>What They Think</h3>
+                            <div class="stat" style="font-size: 4rem;">$3.50</div>
+                            <p style="font-size: 1.2rem;">per square foot</p>
+                            <p style="margin-top: 1rem; font-size: 1.3rem; font-weight: 600;">
+                                Average job: <span class="highlight">$2,000</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="split-right">
+                        <div class="visual-box" style="background: var(--stone-orange); color: white;">
+                            <h3 style="color: white;">What They're Losing</h3>
+                            <div class="stat" style="font-size: 4rem; color: white;">$100K-150K</div>
+                            <p style="font-size: 1.2rem; color: white;">left on the table annually</p>
+                            <p style="margin-top: 1rem; font-size: 1.3rem; font-weight: 600; color: white;">
+                                Due to bad systems
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: The 4 Revenue Killers -->
+        <div class="slide" data-slide="5">
+            <div class="slide-header">
+                <div class="slide-number">THE 4 REVENUE KILLERS</div>
+            </div>
+            <div class="slide-content reveal-on-click">
+                <h2>Why Contractors Leave Money on the Table</h2>
+                <div class="quadrant-grid">
+                    <div class="quadrant-item" data-item="1">
+                        <h3>Pricing Guesswork</h3>
+                        <p>No data, just gut feel. Either underpricing by $30K-50K annually or losing 40-50% of quotes.</p>
+                    </div>
+                    <div class="quadrant-item" data-item="2">
+                        <h3>Lead Inconsistency</h3>
+                        <p>Feast or famine. Can't afford $60K-80K annually for real marketing. No predictable pipeline.</p>
+                    </div>
+                    <div class="quadrant-item" data-item="3">
+                        <h3>Follow-Up Failure</h3>
+                        <p>Only 40-60% of leads get followed up within 24 hours. 30-40% of revenue evaporates.</p>
+                    </div>
+                    <div class="quadrant-item" data-item="4">
+                        <h3>Inventory Chaos</h3>
+                        <p>Running out mid-job, over-ordering, tying up cash. Delays and frustrated customers.</p>
+                    </div>
+                </div>
+                <div class="click-hint">Click to reveal each killer →</div>
+            </div>
+        </div>
+
+        <!-- Slide 6: The Insight -->
+        <div class="slide" data-slide="6">
+            <div class="slide-header">
+                <div class="slide-number">THE INSIGHT</div>
+            </div>
+            <div class="slide-content">
+                <h2>You Have What They Need</h2>
+                <div class="stat" style="font-size: 3.5rem;">AGGREGATED MARKET INTELLIGENCE</div>
+                <div class="visual-box" style="max-width: 900px; margin: 2rem auto; text-align: left;">
+                    <p class="content-text">
+                        <span class="emphasis">"Jobs exactly like this one—800 sq ft residential basement, metallic finish—close at $4.10 per square foot in your market with a 68% win rate. Here's your optimal price: $4.35."</span>
+                    </p>
+                    <p class="content-text" style="margin-top: 2rem;">
+                        That contractor just went from <span class="highlight">guessing to data-backed confidence</span>.
+                    </p>
+                </div>
+                <p class="content-text" style="margin-top: 2rem; font-weight: 700; font-size: 1.6rem;">
+                    This intelligence is only possible with scale. <span class="highlight">You're the only one who can provide it.</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Introducing Stackked -->
+        <div class="slide" data-slide="7">
+            <div class="slide-header">
+                <div class="slide-number">INTRODUCING STACKKED</div>
+            </div>
+            <div class="slide-content">
+                <h2>The Revenue Operating System</h2>
+                <p class="subtitle">Making contractors successful & buying from you inevitable</p>
+                <div class="flow-diagram reveal-on-click">
+                    <div class="flow-step" data-step="1">
+                        <h4>1. Customer Lands on Website</h4>
+                        <p>Professional landing page, 30-second form submission</p>
+                    </div>
+                    <div class="flow-step" data-step="2">
+                        <h4>2. Instant Mobile Alert</h4>
+                        <p>Push notification with project details to contractor's phone</p>
+                    </div>
+                    <div class="flow-step" data-step="3">
+                        <h4>3. AI-Powered Quote</h4>
+                        <p>Material recommendations, pricing intelligence, professional PDF with e-signature</p>
+                    </div>
+                    <div class="flow-step" data-step="4">
+                        <h4>4. Automated Follow-Up</h4>
+                        <p>Smart email and SMS sequences—no manual work required</p>
+                    </div>
+                    <div class="flow-step" data-step="5">
+                        <h4>5. One-Tap Ordering</h4>
+                        <p>Materials ordered directly from Stone Coat when customer approves</p>
+                    </div>
+                </div>
+                <div class="click-hint">Click to reveal workflow →</div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Dashboard Intelligence -->
+        <div class="slide" data-slide="8">
+            <div class="slide-header">
+                <div class="slide-number">PLATFORM INTELLIGENCE</div>
+            </div>
+            <div class="slide-content">
+                <h2>Real-Time Business Intelligence</h2>
+                <div class="split-content">
+                    <div class="split-left">
+                        <div class="visual-box">
+                            <h3 style="color: var(--stone-black);">Contractor Dashboard</h3>
+                            <ul style="text-align: left; font-size: 1.2rem; line-height: 2; margin-top: 1.5rem;">
+                                <li><strong>Pipeline:</strong> Active leads & close probability</li>
+                                <li><strong>Inventory:</strong> Consumption & reorder alerts</li>
+                                <li><strong>Performance:</strong> Close rate & revenue trends</li>
+                                <li><strong>Benchmarking:</strong> Compare to regional peers</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="split-right">
+                        <div class="visual-box" style="background: var(--stone-orange); color: white;">
+                            <h3 style="color: white;">Stone Coat Dashboard</h3>
+                            <ul style="text-align: left; font-size: 1.2rem; line-height: 2; margin-top: 1.5rem; color: white;">
+                                <li><strong>Real-time demand:</strong> What products are being quoted</li>
+                                <li><strong>Geographic trends:</strong> Hot & cooling markets</li>
+                                <li><strong>Forecasting:</strong> Predict orders 30-60 days out</li>
+                                <li><strong>Quality control:</strong> Customer satisfaction data</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="content-text" style="margin-top: 2rem; font-weight: 700;">
+                    This is your <span class="highlight">data moat</span>. It gets more valuable every single day.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 9: The 4 Moats -->
+        <div class="slide" data-slide="9">
+            <div class="slide-header">
+                <div class="slide-number">COMPETITIVE MOATS</div>
+            </div>
+            <div class="slide-content reveal-on-click">
+                <h2>Why This Is Unbreakable</h2>
+                <div class="quadrant-grid">
+                    <div class="quadrant-item" data-item="1">
+                        <h3>Data Moat</h3>
+                        <p>30,000+ quote data points after 6 months. Competitors can't replicate this intelligence—it takes 2-3 years.</p>
+                    </div>
+                    <div class="quadrant-item" data-item="2">
+                        <h3>Workflow Moat</h3>
+                        <p>Their entire business runs here. Switching costs are enormous. ServiceTitan has 114% net retention.</p>
+                    </div>
+                    <div class="quadrant-item" data-item="3">
+                        <h3>Financial Moat</h3>
+                        <p>Net-30 terms, equipment financing, customer financing. Once they rely on your capital, they can't switch.</p>
+                    </div>
+                    <div class="quadrant-item" data-item="4">
+                        <h3>Network Effects</h3>
+                        <p>More contractors = better data = more value for everyone. The marketplace becomes unstoppable.</p>
+                    </div>
+                </div>
+                <div class="click-hint">Click to reveal each moat →</div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Business Model -->
+        <div class="slide" data-slide="10">
+            <div class="slide-header">
+                <div class="slide-number">BUSINESS MODEL</div>
+            </div>
+            <div class="slide-content">
+                <h2>How Everyone Wins</h2>
+                <div class="timeline reveal-on-click">
+                    <div class="timeline-item" data-item="1">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Foundation</h3>
+                            <p><strong>Free</strong></p>
+                            <p>All orders through platform</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-item="2">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Growth</h3>
+                            <p><strong>$100/month</strong></p>
+                            <p>($100 credit—pays for itself)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-item="3">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Pro</h3>
+                            <p><strong>$250-500/month</strong></p>
+                            <p>Advanced features + marketplace access</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-box" style="margin-top: 3rem; max-width: 700px;">
+                    <div class="stat" style="font-size: 3.5rem;">$13.7M</div>
+                    <p class="content-text">Annual revenue at 1,000 contractors</p>
+                    <p class="content-text" style="margin-top: 1rem;">
+                        <span class="highlight">~$8.7M net margin (63%)</span>
+                    </p>
+                </div>
+                <div class="click-hint">Click to reveal tiers →</div>
+            </div>
+        </div>
+
+        <!-- Slide 11: 3-Year Vision -->
+        <div class="slide" data-slide="11">
+            <div class="slide-header">
+                <div class="slide-number">3-YEAR VISION</div>
+            </div>
+            <div class="slide-content">
+                <h2>The Growth Trajectory</h2>
+                <div class="timeline reveal-on-click">
+                    <div class="timeline-item" data-item="1">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Year 1</h3>
+                            <p><strong>100 contractors</strong></p>
+                            <p>$1.3M revenue</p>
+                            <p>15% increase in repeat purchases</p>
+                            <p style="margin-top: 0.5rem; color: var(--stone-green); font-weight: 700;">Proof of concept ✓</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-item="2">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Year 2</h3>
+                            <p><strong>500 contractors</strong></p>
+                            <p>$6.8M revenue</p>
+                            <p>Marketplace launches</p>
+                            <p style="margin-top: 0.5rem; color: var(--stone-orange); font-weight: 700;">Network effects begin</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-item="3">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Year 3</h3>
+                            <p><strong>1,000+ contractors</strong></p>
+                            <p>$13.7M revenue</p>
+                            <p>Platform users buying 2.5x more</p>
+                            <p style="margin-top: 0.5rem; color: var(--stone-orange); font-weight: 700;">Competitors 3-4 years behind</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="content-text" style="margin-top: 3rem; font-size: 1.6rem; font-weight: 700;">
+                    This compounds. <span class="highlight">Every quarter you pull further ahead.</span>
+                </p>
+                <div class="click-hint">Click to reveal timeline →</div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Execution Roadmap -->
+        <div class="slide" data-slide="12">
+            <div class="slide-header">
+                <div class="slide-number">EXECUTION ROADMAP</div>
+            </div>
+            <div class="slide-content">
+                <h2>Making It Real</h2>
+                <div class="flow-diagram reveal-on-click">
+                    <div class="flow-step" data-step="1">
+                        <h4>Phase 1: Pilot Program (Months 1-6)</h4>
+                        <p><strong>10 hand-selected contractors</strong> across diverse markets</p>
+                        <p>Goal: Prove concept, refine onboarding, build case studies</p>
+                    </div>
+                    <div class="flow-step" data-step="2">
+                        <h4>Phase 2: Controlled Rollout (Months 6-12)</h4>
+                        <p><strong>Scale to 100 contractors</strong></p>
+                        <p>Goal: Validate unit economics, launch marketplace beta</p>
+                    </div>
+                    <div class="flow-step" data-step="3">
+                        <h4>Phase 3: National Expansion (Year 2)</h4>
+                        <p><strong>500+ contractors</strong></p>
+                        <p>Goal: Full marketplace launch, network effects activate, financial services integration</p>
+                    </div>
+                </div>
+                <div class="visual-box" style="margin-top: 2rem; max-width: 800px;">
+                    <p class="content-text" style="font-weight: 700;">
+                        Success Metrics: 70%+ daily active usage • 20+ quotes/contractor/month • 25%+ order frequency increase
+                    </p>
+                </div>
+                <div class="click-hint">Click to reveal phases →</div>
+            </div>
+        </div>
+
+        <!-- Slide 13: The Ask -->
+        <div class="slide" data-slide="13">
+            <div class="slide-header">
+                <div class="slide-number">THE ASK</div>
+            </div>
+            <div class="slide-content">
+                <h2>Phase 1 Investment</h2>
+                <div class="investment-box">
+                    <h2 style="text-align: center;">6-Month Pilot Program</h2>
+                    <div class="investment-details">
+                        <p><strong>Stackked:</strong> $250K (development, onboarding, support)</p>
+                        <p><strong>Stone Coat:</strong> $150K material credits for pilot contractors</p>
+                        <p style="margin-top: 1rem; font-size: 1.6rem;"><strong>Total Investment: $400K</strong></p>
+                    </div>
+                    <div class="roi-highlight">
+                        Expected Year 1 Return:<br>
+                        $500K-750K incremental material revenue
+                    </div>
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <p style="font-size: 1.2rem; font-weight: 600; color: var(--stone-green);">
+                            ✓ Fully functional MVP<br>
+                            ✓ 10 contractors actively using<br>
+                            ✓ Data dashboard operational<br>
+                            ✓ Go/no-go decision point
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Closing Vision -->
+        <div class="slide" data-slide="14">
+            <div class="slide-content">
+                <svg class="mountain-icon" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 250 L250 80 L400 180 L550 60 L700 250"
+                          stroke="#B75533"
+                          stroke-width="20"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                    <path d="M150 250 L280 100 L410 200 L540 90 L670 250"
+                          stroke="#B75533"
+                          stroke-width="20"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                <h1 style="margin-top: 2rem;">This Isn't Software</h1>
+                <h2 style="color: var(--stone-orange); font-size: 4rem;">This Is Strategic Defense</h2>
+                <div class="content-text" style="margin-top: 3rem; max-width: 1000px; font-size: 1.6rem; line-height: 1.8;">
+                    <p style="margin-bottom: 1.5rem;">Every contractor on this platform is a contractor your competitors can't easily reach.</p>
+                    <p style="margin-bottom: 1.5rem;">Every data point makes your intelligence more valuable.</p>
+                    <p style="margin-bottom: 1.5rem;">Every successful project increases network effects.</p>
+                </div>
+                <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <p style="font-size: 1.8rem; font-weight: 800; color: var(--stone-black);">
+                        You're not buying a CRM.<br>
+                        <span class="highlight" style="font-size: 2.2rem;">You're building a fortress around your customer base.</span>
+                    </p>
+                </div>
+                <p class="content-text" style="margin-top: 3rem; font-size: 1.5rem; font-weight: 700;">
+                    The question isn't whether someone will build this.<br>
+                    <span class="highlight" style="font-size: 1.8rem;">The question is whether it's you or your competitor.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="previousSlide()">‹</button>
+        <button class="nav-button" id="nextBtn" onclick="nextSlide()">›</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+        let revealSteps = {};
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            const currentSlideElement = document.querySelector(`[data-slide="${currentSlide}"]`);
+            currentSlideElement.classList.add('active');
+
+            // Reset reveal states
+            revealSteps[currentSlide] = 0;
+
+            // Update progress bar
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // Click-to-reveal functionality
+        document.addEventListener('click', (e) => {
+            const slide = e.target.closest('.slide.active.reveal-on-click');
+            if (!slide) return;
+
+            if (!revealSteps[currentSlide]) revealSteps[currentSlide] = 0;
+
+            // Reveal items based on data attributes
+            const items = slide.querySelectorAll('[data-step], [data-item]');
+            if (revealSteps[currentSlide] < items.length) {
+                const nextItem = items[revealSteps[currentSlide]];
+                nextItem.classList.add('revealed');
+                revealSteps[currentSlide]++;
+
+                // Hide click hint when all items revealed
+                if (revealSteps[currentSlide] >= items.length) {
+                    const hint = slide.querySelector('.click-hint');
+                    if (hint) hint.style.display = 'none';
+                }
+            }
+        });
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
